@@ -5,9 +5,12 @@ from matplotlib import pyplot, cm
 import glob
 from skimage import measure
 import train_resnet_keras
-
+import tensorflow as tf
 from tensorflow.python.client import device_lib
 
+os.environ['THEANO_FLAGS'] = "device=gpu0,floatX=float32,lib.cnmem=1"
+
+sess = tf.Session(config=tf.ConfigProto(log_device_placement=True))
 print(device_lib.list_local_devices())
 
 fileDir = '/data2/yeom/ky_mra'
@@ -79,4 +82,4 @@ print(X_test.shape)
 Y_test = shuffled_labels[end_train_index:]
 print(Y_test.shape)
  
-train_resnet_keras.train_resnet(X_train, Y_train, X_test, Y_test)
+train_resnet_keras.train_resnet(X_train, Y_train, X_test, Y_test).cuda()
