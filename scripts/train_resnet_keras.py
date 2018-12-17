@@ -1,6 +1,7 @@
 from resnet_keras_functions import *
-
+import tensorflow as tf
 import keras.backend as K
+
 
 def train_resnet(X_train_orig, Y_train_orig, X_test_orig, Y_test_orig):
 
@@ -8,6 +9,7 @@ def train_resnet(X_train_orig, Y_train_orig, X_test_orig, Y_test_orig):
   K.set_learning_phase(1)
 
   model = ResNet50(input_shape = (64, 64, 3), classes = 6)
+  # model = multi_gpu_model(model, gpus=4)
 
   model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
